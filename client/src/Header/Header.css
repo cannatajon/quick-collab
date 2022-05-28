@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@100&family=Roboto+Mono:ital,wght@1,700&display=swap');
+
+.header{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid blue;
+    height: 70px;
+    background-color: #121212;
+    border-bottom: 1px solid rgb(93, 93, 93);
+    font-family: 'Roboto Mono', monospace;
+}
+
+.main-name{
+    color: white;
+    margin-left: 20px;
+}

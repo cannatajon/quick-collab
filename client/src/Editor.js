@@ -1,8 +1,12 @@
 import {useEffect, useState, useCallback} from 'react'
+import Header from './Header/Header'
+import Footer from './Footer'
 import Quill from 'quill'
 import "quill/dist/quill.snow.css"
 import {io} from 'socket.io-client'
 import { useParams } from 'react-router-dom'
+import Participants from './Participants'
+import Chat from './Chat'
 
 const TOOLBAR_OPTIONS =[
     [{header: [1,2,3,4,5,6, false]}],
@@ -99,7 +103,16 @@ export default function Editor() {
 
     
   return (
-      
-    <div className="container" ref={wrapperRef}></div>
+      <>
+      <Header></Header>
+    <div className="wrapper">
+    <div className="container" ref={wrapperRef}>
+    <Participants/>
+    <Chat/>
+    <Footer></Footer>
+    </div>
+    </div>
+    
+    </>
   )
 }
