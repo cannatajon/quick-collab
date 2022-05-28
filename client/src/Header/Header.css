@@ -2,9 +2,9 @@
 
 .header{
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    border: 1px solid blue;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     height: 70px;
     background-color: #121212;
     border-bottom: 1px solid rgb(93, 93, 93);
@@ -13,5 +13,34 @@
 
 .main-name{
     color: white;
-    margin-left: 20px;
+    margin-left: 5%;
+}
+
+.invite-link{
+    color: white;
+    margin-right: 5%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+}
+
+#copy-link-button{
+    cursor: pointer;
+    border-radius: 5px 0 0 5px;
+}
+
+#copy-link-button:hover{
+    background-color: rgba(255, 255, 255, 0.073);
+}
+
+#invite-link-input{
+    width: 250px;
+}
+
+#invite-link-input, #copy-link-button{
+    border: 1px solid rgba(255, 255, 255, 0.19);
+    background: none;
+    color: white;
+    padding: 10px
 }

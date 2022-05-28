@@ -22,11 +22,10 @@ const TOOLBAR_OPTIONS =[
 
 const save_interval = 2000
 
-export default function Editor() {
+export default function Editor(params) {
     const [socket, setSocket] = useState()
     const [quill, setQuill] = useState()
     const {id: roomID} = useParams()
-    console.log(roomID)
 
     useEffect(()=>{
         const s = io("http://localhost:3001")
@@ -104,14 +103,17 @@ export default function Editor() {
     
   return (
       <>
-      <Header></Header>
+      <Header roomID = {roomID}></Header>
     <div className="wrapper">
     <div className="container" ref={wrapperRef}>
+    </div>
+    <div className="side-bar">
     <Participants/>
     <Chat/>
+    </div>
+    
+    </div>
     <Footer></Footer>
-    </div>
-    </div>
     
     </>
   )

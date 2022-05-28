@@ -1,6 +1,5 @@
 .footer{
     height: 80px;
-    border: 1px solid blue;
     bottom: 0;
     position: sticky;
 }

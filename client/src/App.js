@@ -9,9 +9,9 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path ='/' exact element={<Navigate to={`/room/${uuidV4()}`}/>}>
-        </Route>
-        <Route path ='room/:id' element={<Editor/>}>
+        <Route path ='/' exact element={<Navigate to={`/room/${roomID}`}/>}/>
+        
+        <Route path ='room/:id' element={<Editor id={roomID}/>}>
         </Route>
       </Routes>
       
