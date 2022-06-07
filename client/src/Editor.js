@@ -109,7 +109,7 @@ export default function Editor(params) {
     </div>
     <div className="side-bar">
     <Participants/>
-    <Chat/>
+    {socket ? <Chat roomID = {roomID} socket={socket}/> : null}
     </div>
     
     </div>

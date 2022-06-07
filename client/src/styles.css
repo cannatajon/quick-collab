@@ -30,18 +30,19 @@
 
  .container .ql-container.ql-snow{
      border: none;
+     border-radius: 0 0 5px 5px;
      display: flex;
      justify-content: center;
      zoom: 70%;
      padding: 25px;
-     border: 1px solid rgba(8, 59, 61, 0.769);
+     border: 1px solid rgba(17, 160, 67, 0.305);
  }
 
  .container .ql-toolbar.ql-snow{
      display: flex;
      justify-content: center;
      z-index: 1;
-     background-color: rgb(4, 154, 159);
+     background-color: rgba(17, 160, 67, 0.803);
      border: none;
      border-radius: 5px 5px 0 0;
  }

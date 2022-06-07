@@ -1,11 +1,12 @@
 import {useState} from 'react'
 import './Header.css'
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import { AiOutlineCopy } from "react-icons/ai";
+import { MdCopyAll } from "react-icons/md";
+import {AiOutlineCheck} from "react-icons/ai"
 
 export default function Header(params) {
 
-  const [isCopied, setIsCopied] = useState("false")
+  const [isCopied, setIsCopied] = useState(false)
 
 
 
@@ -15,7 +16,7 @@ export default function Header(params) {
       <div className="invite-link">
         <div>Invite Link --> &nbsp;</div>
         <CopyToClipboard text={`localhost:3000/room/${params.roomID}`}>
-          <button id="copy-link-button"><AiOutlineCopy/></button>
+          <button id="copy-link-button" onClick={()=>alert("Copied to Clipboard")}>{isCopied ? <AiOutlineCheck/> : <MdCopyAll/>}</button>
         </CopyToClipboard>
         <input type="text"  value={params.roomID} readOnly id="invite-link-input"/></div>
 

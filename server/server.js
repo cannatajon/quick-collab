@@ -15,10 +15,12 @@ const io = require('socket.io')(3001, {
 
 const defaultValue = ""
 
+
 io.on('connection', socket =>{
-    console.log("connected to client")
+    console.log("connected to client", socket.id)
 
     socket.on("get-room", async roomID =>{
+
         const document = await findOrCreateDocument(roomID)
         socket.join(roomID)
         socket.emit("load-room", document.data)
@@ -29,6 +31,20 @@ io.on('connection', socket =>{
         
         socket.on("save-document", async data => {
             await Document.findByIdAndUpdate(roomID, {data})
+        })
+
+        socket.on("join_room", (data) =>{
+            socket.join(data);
+            console.log('user', socket.id, "joined room", data)
+        })
+
+        socket.on("send_message", (data)=>{
+            console.log(data.message)
+            socket.to(data.room).emit("receive_message", data)
+        })
+
+        socket.on("disconnect", ()=>{
+            console.log("user", socket.id, "disconnected")
         })
 
     })
