@@ -5,7 +5,7 @@ import Quill from 'quill'
 import "quill/dist/quill.snow.css"
 import {io} from 'socket.io-client'
 import { useParams } from 'react-router-dom'
-import Participants from './Participants'
+
 import Chat from './Chat'
 
 const TOOLBAR_OPTIONS =[
@@ -108,7 +108,6 @@ export default function Editor(params) {
     <div className="container" ref={wrapperRef}>
     </div>
     <div className="side-bar">
-    <Participants/>
     {socket ? <Chat roomID = {roomID} socket={socket}/> : null}
     </div>
     

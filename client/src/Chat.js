@@ -1,5 +1,6 @@
 import React , {useState, useEffect} from 'react'
 import './Chat.css'
+import Participants from './Participants'
 
 export default function Chat({roomID, socket}) {
 
@@ -29,18 +30,21 @@ export default function Chat({roomID, socket}) {
 
          await socket.emit("send_message", messageData)
          setMessageList((list)=>[...list, messageData])
+         setCurrentMessage("")
     }
 
     useEffect(()=>{
-        socket.on("receive_message", (data)=>{
+        socket.off("receive_message").on("receive_message", (data)=>{
             setMessageList((list) => [...list, data])
         })
-    }, [socket])
+    },[socket])
 
 
 
   return (
     <div className='chat'>
+
+        <Participants></Participants>
 
         {!showChat ?(
         <div className='join-chat'>
