@@ -26,6 +26,8 @@ export default function Editor(params) {
     const [socket, setSocket] = useState()
     const [quill, setQuill] = useState()
     const {id: roomID} = useParams()
+    const [users, setUsers] = useState([])
+
 
     useEffect(()=>{
         const s = io("http://localhost:3001")
@@ -74,6 +76,7 @@ export default function Editor(params) {
         })
 
         socket.emit('get-room', roomID)
+        
     }, [socket, quill, roomID])
 
     useEffect(()=>{
@@ -87,6 +90,20 @@ export default function Editor(params) {
             clearInterval(interval)
         }
     }, [socket, quill])
+
+    useEffect(()=>{
+        if (socket == null) return
+
+        socket.on("load-chat", (data)=>{
+            console.log("coming from editor", data)
+            setUsers(data)
+        })
+        
+    }, [socket])
+
+    
+    
+    
 
     const wrapperRef = useCallback(wrapper=>{
         if(wrapper == null) return
@@ -108,7 +125,7 @@ export default function Editor(params) {
     <div className="container" ref={wrapperRef}>
     </div>
     <div className="side-bar">
-    {socket ? <Chat roomID = {roomID} socket={socket}/> : null}
+    {socket ? <Chat roomID = {roomID} socket={socket} userslol={users}/> : null}
     </div>
     
     </div>

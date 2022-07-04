@@ -2,17 +2,29 @@ import React , {useState, useEffect} from 'react'
 import './Chat.css'
 import Participants from './Participants'
 
-export default function Chat({roomID, socket}) {
+export default function Chat({roomID, socket, userslol}) {
 
     const [name, setName] = useState("")
     const [currentMessage, setCurrentMessage] = useState("")
     const [messageList, setMessageList] = useState([])
     const [showChat, setShowChat] = useState(false)
+    const [users, setUsers] = useState([])
+    const [usersInRoom, setUsersInRoom] = useState([])
 
+    useEffect(()=>{
+        setUsersInRoom([users.filter(user=>user.room = roomID)])
+    }, [])
+
+    
     
     const joinChat = () =>{
         if (name !== ""){
-            socket.emit("join_room", [roomID, name])
+            const userData = {
+                userID: socket.id,
+                room: roomID,
+                name: name,
+            }
+            socket.emit("join_room", userData)
             setShowChat(true)
         }
     }
@@ -35,16 +47,30 @@ export default function Chat({roomID, socket}) {
 
     useEffect(()=>{
         socket.off("receive_message").on("receive_message", (data)=>{
+            console.log(data)
             setMessageList((list) => [...list, data])
         })
     },[socket])
+
+    useEffect(()=>{
+        socket.off("add_user").on("add_user", (data)=>{
+            console.log("hey", data)
+            setUsers(data)
+        })
+        
+    }, [socket])
+    
+
+        socket.on("load-chat", (data)=>{
+            setUsers(data)
+        })
 
 
 
   return (
     <div className='chat'>
 
-        <Participants></Participants>
+        <Participants users={users}></Participants>
 
         {!showChat ?(
         <div className='join-chat'>

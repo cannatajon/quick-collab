@@ -15,6 +15,8 @@ const io = require('socket.io')(3001, {
 
 const defaultValue = ""
 
+let users = []
+
 
 io.on('connection', socket =>{
     console.log("connected to client", socket.id)
@@ -24,6 +26,8 @@ io.on('connection', socket =>{
         const document = await findOrCreateDocument(roomID)
         socket.join(roomID)
         socket.emit("load-room", document.data)
+
+        socket.broadcast.in(roomID).emit("load-chat", users)
 
         socket.on("send-changes", delta =>{
             socket.broadcast.to(roomID).emit("receive-changes", delta)
@@ -35,17 +39,26 @@ io.on('connection', socket =>{
 
         socket.on("join_room", (data) =>{
             socket.join(data);
-            console.log('user', socket.id, "joined room", data)
+            console.log('user', socket.id, "joined room", data.room)
+            users.push(data)
+            socket.in(data.room).emit("add_user", users)
+            console.log(users)
         })
 
         socket.on("send_message", (data)=>{
-            console.log(data.message)
             socket.to(data.room).emit("receive_message", data)
         })
 
-        socket.on("disconnect", ()=>{
-            console.log("user", socket.id, "disconnected")
+        socket.on("user_list", (data)=>{
+            console.log(data)
         })
+
+        socket.on("disconnect", ()=>{
+            users = users.filter(user=>user.userID != socket.id)
+            console.log("user", socket.id, "disconnected")
+            socket.emit("add_user", users)
+        })
+        
 
     })
 })
